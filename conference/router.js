@@ -5,6 +5,7 @@ const { Op } = require("sequelize");
 const router = new Router();
 const Comment=require("../comment/model")
 const Favourite=require("../favourite/model")
+const Location=require("../location/model")
 
 
 router.get("/conference", async (req, res, next) => {
@@ -16,7 +17,7 @@ router.get("/conference", async (req, res, next) => {
         end_date: {
           [Op.gte]: new Date()
         }
-      }
+      }, include:[{model:Location, attributes:["city","country"]}]
     });
     res.send(conferences);
   } catch (error) {
@@ -27,7 +28,7 @@ router.get("/conference", async (req, res, next) => {
 router.get("/conference/:id", async (req, res, next) => {
   try {
     const conference = await Conference.findByPk(req.params.id, {
-      include: [{ model: User, attributes: ["id", "name"] }]
+      include: [{ model: Location }]
     });
     res.send(conference);
   } catch (error) {

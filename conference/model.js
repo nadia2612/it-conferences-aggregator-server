@@ -24,7 +24,7 @@ const Conference = sequelize.define("conference", {
     allowNull: false
   },
   link:{
-    type: Sequelize.DATEONLY,
+    type: Sequelize.STRING,
     allowNull: false
 
   },

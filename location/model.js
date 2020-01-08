@@ -3,7 +3,7 @@ const sequelize = require("../db");
 const Conference =require("../conference/model")
 
 const Location = sequelize.define("location", {
-  land: {
+  country: {
     type: Sequelize.STRING,
     allowNull: false
   },
@@ -14,8 +14,7 @@ const Location = sequelize.define("location", {
   
 });
 
-// Location.belongsTo(Conference);
-// Location.hasMany(Conference);
+
 
 
 module.exports = Location;
