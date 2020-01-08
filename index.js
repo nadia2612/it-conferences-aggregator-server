@@ -3,6 +3,7 @@ const app = express();
 
 const userRouter = require("./user/router");
 const loginRouter = require("./auth/router");
+const conferenceRouter= require("./conference/router")
 
 const bodyParser = require("body-parser");
 const jsonParser = bodyParser.json();
@@ -14,7 +15,7 @@ app.use(jsonParser);
 const port = process.env.PORT || 4000;
 app.use(userRouter);
 app.use(loginRouter);
-
+app.use(conferenceRouter);
 
 
 
