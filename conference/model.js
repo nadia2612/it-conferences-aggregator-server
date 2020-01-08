@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../db");
+const Location=require("../location/model")
 
 const Conference = sequelize.define("conference", {
   name: {
@@ -33,6 +34,8 @@ const Conference = sequelize.define("conference", {
   }
 });
 
+Location.hasMany(Conference);
+Conference.belongsTo(Location);
 
 
 module.exports = Conference;

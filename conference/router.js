@@ -3,6 +3,9 @@ const Conference = require("./model");
 const { Router } = express;
 const { Op } = require("sequelize");
 const router = new Router();
+const Comment=require("../comment/model")
+const Favourite=require("../favourite/model")
+
 
 router.get("/conference", async (req, res, next) => {
   try {
