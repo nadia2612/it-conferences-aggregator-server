@@ -3,11 +3,10 @@ const Conference = require("./model");
 const { Router } = express;
 const { Op } = require("sequelize");
 const router = new Router();
-const Comment=require("../comment/model")
-const Favourite=require("../favourite/model")
-const Location=require("../location/model")
-const User =require("../user/model")
-
+const Comment = require("../comment/model");
+const Favourite = require("../favourite/model");
+const Location = require("../location/model");
+const User = require("../user/model");
 
 router.get("/conference", async (req, res, next) => {
   try {
@@ -19,14 +18,22 @@ router.get("/conference", async (req, res, next) => {
         end_date: {
           [Op.gte]: new Date()
         },
-        [Op.or]: [{
-        name: {
-          [Op.like]: `%${req.query.search}%`
-        }},
-         {
-          description:
-          {[Op.like]: `%${req.query.search}%`}}]
-      }, include:[{model:Location, attributes:["city","country"]}]
+        [Op.or]: [
+          {
+            name: {
+              [Op.iLike]: `%${req.query.search}%`
+            }
+          },
+          {
+            description: {
+              [Op.iLike]: `%${req.query.search}%`
+            }
+          },
+          { "$location.city$": { [Op.iLike]: `%${req.query.search}%` } },
+          { "$location.country$": { [Op.iLike]: `%${req.query.search}%` } }
+        ]
+      },
+      include: [{ model: Location }]
     });
     res.send(conferences);
   } catch (error) {
@@ -37,7 +44,11 @@ router.get("/conference", async (req, res, next) => {
 router.get("/conference/:id", async (req, res, next) => {
   try {
     const conference = await Conference.findByPk(req.params.id, {
-      include: [{ model: Location},{model: Comment,include: [User]}, {model:Favourite }]
+      include: [
+        { model: Location },
+        { model: Comment, include: [User] },
+        { model: Favourite }
+      ]
     });
     res.send(conference);
   } catch (error) {
@@ -45,6 +56,4 @@ router.get("/conference/:id", async (req, res, next) => {
   }
 });
 
-
 module.exports = router;
-

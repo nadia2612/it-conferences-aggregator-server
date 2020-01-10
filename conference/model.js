@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../db");
-const Location=require("../location/model")
+const Location = require("../location/model");
 
 const Conference = sequelize.define("conference", {
   name: {
@@ -8,11 +8,11 @@ const Conference = sequelize.define("conference", {
     allowNull: false
   },
   description: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(1234),
     allowNull: false
   },
   logo_url: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(1234),
     allowNull: false
   },
   start_date: {
@@ -23,19 +23,17 @@ const Conference = sequelize.define("conference", {
     type: Sequelize.DATEONLY,
     allowNull: false
   },
-  link:{
-    type: Sequelize.STRING,
+  link: {
+    type: Sequelize.STRING(1234),
     allowNull: false
-
   },
-  price:{
-    type:Sequelize.INTEGER,
+  price: {
+    type: Sequelize.INTEGER,
     allowNull: false
   }
 });
 
 Location.hasMany(Conference);
 Conference.belongsTo(Location);
-
 
 module.exports = Conference;
