@@ -11,7 +11,12 @@ const Location = sequelize.define("location", {
     type: Sequelize.STRING,
     allowNull: false
   },
-  
+  lat:{
+    type:Sequelize.FLOAT(11)
+  },
+  lng:{
+    type:Sequelize.FLOAT(11)
+  }
 });
 
 
