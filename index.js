@@ -5,7 +5,7 @@ const userRouter = require("./user/router");
 const loginRouter = require("./auth/router");
 const conferenceRouter = require("./conference/router");
 const commentRouter = require("./comment/router");
-const favouriteRouter = require("./favourite/router");
+const favouriteRouter = require("./favorite/router");
 
 const bodyParser = require("body-parser");
 const jsonParser = bodyParser.json();
