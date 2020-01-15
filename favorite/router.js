@@ -5,7 +5,6 @@ const { Router } = express;
 const router = new Router();
 const Conference = require("../conference/model");
 
-
 router.get("/favorite", async (req, res, next) => {
   try {
     const userId = req.query.jwt ? toData(req.query.jwt).userId : undefined;

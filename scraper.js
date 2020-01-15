@@ -44,47 +44,71 @@ const getConferenceDetails = async (browser, detailsUrl) => {
     const description = $(".entry-content .frontend-entry-content>p")
       .text()
       .trim();
-    const locationStirng = $(
+    const locationString = $(
       ".listing_custom_field.event_custom_field >p>span:eq(0)"
     )
       .text()
       .trim();
-    const [city, country] = locationStirng.split(",");
+    const [city, country] = locationString.split(",");
+
     return {
       start_date,
       end_date,
       link,
       price,
       description,
-      location: { city, country: country.trim(), lat: 0, lng: 0 }
+      location: { city, country: country.trim() }
     };
   });
   await detailsPage.close();
   return details;
 };
 
+const getCoordinates = async location => {
+  const googleMapsClient = require("@google/maps").createClient({
+    key: "key",
+    Promise: Promise
+  });
+
+  const coordinates = googleMapsClient
+    .geocode({ address: location })
+    .asPromise()
+    .then(response => {
+      const coordinates = response.json.results;
+      const { lat, lng } = coordinates[0].geometry.location;
+      return { lat, lng };
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  return coordinates;
+};
+
 module.exports = async () => {
   const browser = await puppeteer.launch();
   const summary = await getConferenceSummary(browser);
 
-  const summaryWithDetails = await Promise.all(
+  const result = await Promise.all(
     summary.map(async current => {
       const { detailsUrl, ...conference } = current;
       console.log(
         "Gattering additional information from " + current.detailsUrl
       );
       const details = await getConferenceDetails(browser, detailsUrl);
-      return { ...conference, ...details };
+      const { city, country } = details.location;
+      const coordinates = await getCoordinates(`${city}, ${country}`);
+
+      const fullConference = {
+        ...conference,
+        ...details,
+        start_date: moment(details.start_date, "DD/MM/YYYY").toDate(),
+        end_date: moment(details.end_date, "DD/MM/YYYY").toDate(),
+        location: { ...details.location, ...coordinates }
+      };
+      console.log(fullConference, "fullConference");
+      return fullConference;
     })
   );
-
-  const result = summaryWithDetails.map(conference => {
-    return {
-      ...conference,
-      start_date: moment(conference.start_date, "DD/MM/YYYY").toDate(),
-      end_date: moment(conference.end_date, "DD/MM/YYYY").toDate()
-    };
-  });
 
   await browser.close();
   return result;
