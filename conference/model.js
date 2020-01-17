@@ -8,7 +8,7 @@ const Conference = sequelize.define("conference", {
     allowNull: false
   },
   description: {
-    type: Sequelize.STRING(1234),
+    type: Sequelize.TEXT,
     allowNull: false
   },
   logo_url: {
@@ -28,7 +28,7 @@ const Conference = sequelize.define("conference", {
     allowNull: false
   },
   price: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
     allowNull: false
   }
 });
