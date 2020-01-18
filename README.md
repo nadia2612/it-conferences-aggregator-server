@@ -1,7 +1,7 @@
 # IT conferences aggregator
 
 This is a server part of IT conferences aggregator.
-A frontend part can be found [here]([https://github.com/nadia2612/it-conferences-aggregator-client](https://github.com/nadia2612/it-conferences-aggregator-client))
+A frontend part can be found [here](https://github.com/nadia2612/it-conferences-aggregator-client)
 
 This application provides an API access to resources like conferences that are stored in a relational database. Conference information is collected using web scrapers from 3-rd party websites being formatted, unified and stored in the database.
 
