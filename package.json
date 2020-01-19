@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "scrape": "node scraper/scraper.js",
+    "startDB": "docker run -d -p 5432:5432 -e POSTGRES_PASSWORD=secret postgres"
   },
   "author": "",
   "license": "ISC",
