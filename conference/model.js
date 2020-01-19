@@ -25,7 +25,7 @@ const Conference = sequelize.define("conference", {
   },
   link: {
     type: Sequelize.STRING(1234),
-    allowNull: false
+    allowNull: true
   },
   price: {
     type: Sequelize.STRING,
