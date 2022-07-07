@@ -18,7 +18,7 @@
     "express": "^4.17.1",
     "ics": "^2.18.0",
     "jsonwebtoken": "^8.5.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "nodemon": "^2.0.2",
     "pg": "^7.17.0",
     "puppeteer": "^2.0.0",
